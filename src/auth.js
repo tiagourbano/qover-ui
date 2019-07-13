@@ -16,7 +16,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
                 ? (<Component {...props} />)
                 : (<Redirect to={{
                         pathname: '/',
-                        state: { message: 'User not found' }
+                        state: { message: 'Access Denied!' }
                     }}/>)
             }
         />

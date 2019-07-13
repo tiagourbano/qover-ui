@@ -6,6 +6,7 @@ import PrivateRoute from './auth';
 import Login from './pages/Login';
 import Survey from './pages/Survey';
 import Result from './pages/Result';
+import Logout from './pages/Logout';
 
 const Routes = () => (
     <Router>
@@ -13,6 +14,7 @@ const Routes = () => (
             <Route exact path="/" component={Login} />
             <PrivateRoute path="/survey" component={Survey} />
             <PrivateRoute path="/result" component={Result} />
+            <Route exact path="/logout" component={Logout} />
         </Switch>
     </Router>
 );
