@@ -1,0 +1,182 @@
+.Result {
+    margin-bottom: 50px;
+
+    h1 {
+        color: #ffffff;
+        font-size: 26px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .payment-type {
+        display: flex;
+        justify-content: center;
+        margin: 40px 0;
+
+        span {
+            color: #ffffff;
+            font-size: 13px;
+            letter-spacing: 1.08px;
+            padding: 10px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 30px;
+
+            input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+
+                &:checked + .slider {
+                    background-color: rgba(255, 255, 255, 0.2);
+                }
+
+                &:checked + .slider:before {
+                    -webkit-transform: translateX(20px);
+                    -ms-transform: translateX(20px);
+                    transform: translateX(20px);
+                }
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(255, 255, 255, 0.2);
+                -webkit-transition: .4s;
+                transition: .4s;
+
+                &:before {
+                    position: absolute;
+                    content: "";
+                    height: 22px;
+                    width: 22px;
+                    left: 4px;
+                    bottom: 4px;
+                    background-color: white;
+                    -webkit-transition: .4s;
+                    transition: .4s;
+                }
+
+                &.round {
+                    border-radius: 34px;
+
+                    &:before {
+                        border-radius: 50%;
+                    }
+                }
+            }
+        }
+    }
+
+    .plans {
+        display: flex;
+        width: 665px;
+        justify-content: space-between;
+
+        .Plan {
+            width: 325px;
+            border-radius: 3px;
+            box-shadow: 0 2px 4px 0 rgba(72, 72, 72, 0.5);
+            background-color: #ffffff;
+            color: #484848;
+
+            .type {
+                font-family: Roboto;
+                font-size: 18px;
+                font-weight: bold;
+                text-align: center;
+                padding: 20px 0;
+            }
+
+            .price {
+                border-top: 1px solid rgba(91, 114, 137, 0.1);
+                border-bottom: 1px solid rgba(91, 114, 137, 0.1);
+                background-color: rgba(49, 207, 218, 0.05);
+                font-family: Roboto;
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                padding: 15px 0;
+                color: #31cfda;
+
+                span {
+                    font-size: 38px;
+                    font-weight: bold;
+
+                    span {
+                        font-size: 16px;
+                        font-weight: normal;
+                        vertical-align: text-top;
+                    }
+                }
+
+                small {
+                    font-size: 11px;
+                    letter-spacing: 1px;
+                }
+            }
+
+            .description {
+                min-height: 14px;
+                font-family: Roboto;
+                font-size: 12px;
+                text-align: center;
+
+                border-bottom: 1px solid rgba(91, 114, 137, 0.1);
+                padding: 15px 0;
+
+                span {
+                    font-weight: 500;
+                }
+            }
+
+            .option {
+                padding: 10px;
+
+                .button {
+                    width: 305px;
+                    height: 50px;
+                    border-radius: 5px;
+                    background-color: #31cfda;
+
+                    line-height: 50px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    text-align: center;
+                    color: #ffffff;
+
+                    cursor: pointer;
+                }
+            }
+
+            &.selected {
+                background-color: #31cfda;
+                color: #ffffff;
+
+                .price {
+                    background-color: rgba(255, 255, 255, 0.15);
+                    color: #ffffff;
+                }
+
+                .option {
+                    .button {
+                        background-color: #ffffff;
+                        color: #31cfda;
+                        cursor: auto;
+
+                        svg {
+                            vertical-align: text-bottom;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

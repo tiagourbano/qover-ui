@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 import { Input } from '../../components/form/Input';
 import { Select } from '../../components/form/Select';
+
+import './index.scss';
 
 const DEFAULT_STATE = {
     form: {
@@ -82,9 +83,6 @@ class Survey extends Component {
 
         return (
             <div className="Survey">
-                <Link to="/logout"> Log Out </Link>
-                <hr className="my-3" />
-
                 <div className="form">
                     <Input
                         error={errors.age}
@@ -107,8 +105,8 @@ class Survey extends Component {
                         onChange={(ev) => this.onChange('price', ev)}
                     />
 
-                    <div className="form-group">
-                        <button onClick={this.handleSubmit} className="button-get-price">Get a price</button>
+                    <div className="button-get-price">
+                        <button onClick={this.handleSubmit}>Get a price</button>
                     </div>
                 </div>
             </div>

@@ -1,26 +1,47 @@
 import React, { Component } from 'react';
 
+import { ReactComponent as PlanSelected } from './valid.svg';
+
 export default class Plan extends Component {
+    currencyFormatBE(price) {
+        if (!price) {
+            return;
+        }
+
+        return parseFloat(price)
+            .toFixed(2)
+            .replace('.', ',')
+            .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+    }
+
+    onPlanClick() {
+        this.props.onClick(this.props.type);
+    }
+
     render() {
         return(
-            <div className="Plan">
+            <div className={`Plan ${ this.props.planSelected ? 'selected' : '' }`}>
                 <div className="type">
                     {this.props.type}
                 </div>
 
                 <div className="price">
-                    <span>{this.props.price} €</span>
+                    <span>{this.currencyFormatBE(this.props.price)}<span>€</span></span>
                     <small>YEARLY INCL. TAXEX</small>
                 </div>
 
-                <div className="description"><strong>Maximum duration travel</strong> of <strong>{this.props.maxDurationTravel} days</strong></div>
-                <div className="description"><strong>Medical expenses reimbursement</strong> up to <strong>{this.props.medicalReimbursement} €</strong></div>
-                <div className="description"><strong>Personal assistance abroad</strong> up to <strong>{this.props.personalAssistance} €</strong></div>
-                <div className="description"><strong>Travel assistance abroad</strong> up to <strong>{this.props.travelAssistance} €</strong> per insured per travel</div>
-                <div className="description"><strong>Coverage duration: {this.props.coverageDuration} year</strong></div>
+                <div className="description"><span>Maximum duration travel</span> of <span>{this.props.maxDurationTravel} days</span></div>
+                <div className="description"><span>Medical expenses reimbursement</span> up to <span>{this.props.medicalReimbursement} €</span></div>
+                <div className="description"><span>Personal assistance abroad</span> up to <span>{this.props.personalAssistance} €</span></div>
+                <div className="description"><span>Travel assistance abroad</span> up to <span>{this.props.travelAssistance} €</span><br />per insured per travel</div>
+                <div className="description"><span>Coverage duration: {this.props.coverageDuration} year</span></div>
 
                 <div className="option">
-                    <div className="button">Choose this plan</div>
+                    {
+                        this.props.planSelected
+                            ? (<div className="button"><PlanSelected /> Plan selected</div>)
+                            : (<div className="button" onClick={this.onPlanClick.bind(this)}>Choose this plan</div>)
+                    }
                 </div>
             </div>
         )

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
-export default class Login extends Component {
+import { ReactComponent as Logo } from './logo.svg';
+import check from './checked-no-label.png';
+import './index.scss';
+
+class Login extends Component {
 
     constructor(props) {
         super(props)
@@ -30,6 +36,7 @@ export default class Login extends Component {
             .then(response => {
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('data', JSON.stringify(response.data));
+                this.props.setAuthentication(true);
                 this.props.history.push("/survey");
                 return;
             })
@@ -40,14 +47,12 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div className="col-md-6">
-                <hr  className="my-3"/>
-                {
-                    this.state.message !== ''
-                        ? alert(this.state.message)
-                        : ''
-                }
+            <div className="Login">
+                <Logo />
+
                 <Form>
+                    <h1>Welcome at Qover</h1>
+
                     <FormGroup>
                         <Label for="email">Email</Label>
                         <Input type="text" id="email" onChange={e => this.email = e.target.value} placeholder="" />
@@ -57,9 +62,24 @@ export default class Login extends Component {
                         <Input type="password" id="password" onChange={e => this.password = e.target.value} placeholder="" />
                     </FormGroup>
 
+                    <div className="double-column">
+                        <div className="remember">
+                            <img src={check} alt="Remember me" /> Remember me
+                        </div>
+                        <div className="forgot-password">
+                            Forgot your password?
+                        </div>
+                    </div>
+
                     <Button color="primary" block onClick={this.signIn}>Sign in to your account</Button>
                 </Form>
+
+                <div className="request-access">
+                    Don't have an account? <a href="/">Ask access</a>
+                </div>
             </div>
         );
     }
 }
+
+export default connect(null, actions)(Login)
