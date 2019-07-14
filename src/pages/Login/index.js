@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
@@ -8,16 +7,28 @@ import check from './checked-no-label.png';
 import './index.scss';
 
 class Login extends Component {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            message : this.props.location.state ? this.props.location.state.message : '',
-        };
+    state = {
+        email: null,
+        password: null,
+        message: null,
     }
 
-    signIn = () => {
-        const data = { email: this.email, password: this.password };
+    componentDidMount() {
+        if (this.props.location.state) {
+            this.setState({ message: this.props.location.state.message });
+            this.props.location.state = null;
+        }
+    }
+
+    onChange(field, value) {
+        const state = Object.assign({}, this.state);
+        state[field] = value;
+        this.setState(state);
+    }
+
+    signIn = (event) => {
+        event.preventDefault();
+        const data = Object.assign({}, this.state);
         const requestInfo = {
             method: 'POST',
             body: JSON.stringify(data),
@@ -31,17 +42,18 @@ class Login extends Component {
                 if (response.ok) {
                     return response.json()
                 }
-                throw new Error("Username or password invalid");
+                throw new Error('Invalid email or passaword.');
             })
-            .then(response => {
+            .then((response) => {
                 localStorage.setItem('token', response.token);
                 localStorage.setItem('data', JSON.stringify(response.data));
+
                 this.props.setAuthentication(true);
                 this.props.history.push("/survey");
                 return;
             })
-            .catch(e => {
-                this.setState({ message: e.message });
+            .catch((e) => {
+                this.setState({ message: 'Invalid email or passaword.' });
             });
     }
 
@@ -50,17 +62,23 @@ class Login extends Component {
             <div className="Login">
                 <Logo />
 
-                <Form>
+                <form name="login" onSubmit={this.signIn}>
                     <h1>Welcome at Qover</h1>
 
-                    <FormGroup>
-                        <Label for="email">Email</Label>
-                        <Input type="text" id="email" onChange={e => this.email = e.target.value} placeholder="" />
-                    </FormGroup>
-                    <FormGroup>
-                        <Label for="password">Password</Label>
-                        <Input type="password" id="password" onChange={e => this.password = e.target.value} placeholder="" />
-                    </FormGroup>
+                    {
+                        (this.state.message)
+                            ? <div className="error-message">{this.state.message}</div>
+                            : ''
+                    }
+
+                    <div className="form-group">
+                        <label>Email</label>
+                        <input type="text" name="email" onChange={(ev) => this.onChange('email', ev.target.value)} />
+                    </div>
+                    <div className="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" onChange={(ev) => this.onChange('password', ev.target.value)} />
+                    </div>
 
                     <div className="double-column">
                         <div className="remember">
@@ -71,8 +89,8 @@ class Login extends Component {
                         </div>
                     </div>
 
-                    <Button color="primary" block onClick={this.signIn}>Sign in to your account</Button>
-                </Form>
+                    <button>Sign in to your account</button>
+                </form>
 
                 <div className="request-access">
                     Don't have an account? <a href="/">Ask access</a>
