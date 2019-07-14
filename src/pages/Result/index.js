@@ -9,7 +9,7 @@ import './index.scss';
 
 class Result extends Component {
     state = {
-        planSelected: GLOBAL,
+        planSelected: null,
         offer: {
             yearly: {
                 global: null,
