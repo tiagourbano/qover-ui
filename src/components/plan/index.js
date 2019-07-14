@@ -26,7 +26,7 @@ export default class Plan extends Component {
                 </div>
 
                 <div className="price">
-                    <span>{this.currencyFormatBE(this.props.price)}<span>€</span></span>
+                    <span>{this.currencyFormatBE(this.props.price)} <span>€</span></span>
                     <small>YEARLY INCL. TAXEX</small>
                 </div>
 
