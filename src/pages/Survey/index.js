@@ -9,22 +9,17 @@ import './index.scss';
 
 const DEFAULT_STATE = {
     form: {
-        age: "",
-        car: "",
-        price: ""
+        age: null,
+        car: null,
+        price: null,
     },
     errors: {}
 };
 
-const carOptions = ['AUDI', 'BMW', 'PORSCHE']
+const carOptions = ['AUDI', 'BMW', 'PORSCHE'];
 
 class Survey extends Component {
     state = DEFAULT_STATE;
-
-    componentDidMount() {
-        const data = JSON.parse(localStorage.getItem('data'));
-        this.setState({ user: { nickname: data.name, email: data.email } })
-    }
 
     onChange = (field, ev) => {
         const { form } = this.state;
@@ -51,6 +46,28 @@ class Survey extends Component {
         const MIN_AGE = 18
         const MIN_AGE_FOR_PORSCHE = 25
 
+        if (this.allRequiredFieldsAreFilled()) {
+            if (form.price < MIN_CAR_PRICE) {
+                errors.price = 'Sorry! The price of the car is too low';
+            }
+
+            if (form.age < MIN_AGE && form.car !== 'porsche') {
+                errors.age = 'Sorry! The the driver is too young';
+            }
+
+            if (form.age < MIN_AGE_FOR_PORSCHE && form.car === 'porsche') {
+                errors.age = 'Sorry! We can not accept this particular risk';
+            }
+
+            this.setState({ errors });
+            return Object.keys(errors).length === 0;
+        }
+    }
+
+    allRequiredFieldsAreFilled() {
+        const { form } = this.state;
+        const errors = {};
+
         Object.keys(form).forEach((item) => {
             if (!form[item]) {
                 errors[item] = `${item} is required`;
@@ -62,20 +79,7 @@ class Survey extends Component {
             return false;
         }
 
-        if (form.price < MIN_CAR_PRICE) {
-            errors.price = 'Sorry! The price of the car is too low';
-        }
-
-        if (form.age < MIN_AGE && form.car !== 'porsche') {
-            errors.age = 'Sorry! The the driver is too young';
-        }
-
-        if (form.age < MIN_AGE_FOR_PORSCHE && form.car === 'porsche') {
-            errors.age = 'Sorry! We can not accept this particular risk';
-        }
-
-        this.setState({ errors });
-        return Object.keys(errors).length === 0;
+        return true;
     }
 
     render() {
