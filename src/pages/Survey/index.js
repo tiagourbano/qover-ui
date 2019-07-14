@@ -9,9 +9,9 @@ import './index.scss';
 
 const DEFAULT_STATE = {
     form: {
-        age: null,
-        car: null,
-        price: null,
+        age: "",
+        car: "",
+        price: "",
     },
     errors: {}
 };

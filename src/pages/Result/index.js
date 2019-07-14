@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
 import Plan from '../../components/Plan';
-import { GLOBAL, UNIVERSE } from './planTypes';
+import { GLOBAL, UNIVERSE, CARS } from './planTypes';
 
 import './index.scss';
 
@@ -39,29 +39,10 @@ class Result extends Component {
 
     calculateOffer() {
         const { survey } = this.props;
+        const car = CARS.filter((auto) => auto.car === survey.car)[0];
 
-        let price = 0;
-        let factor = 0;
-        switch (survey.car) {
-            case 'audi':
-                price = 250;
-                factor = 0.3;
-                break;
-            case 'bmw':
-                price = 150;
-                factor = 0.4;
-                break;
-            case 'porsche':
-                price = 500;
-                factor = 0.7;
-                break;
-            default:
-                price = 0;
-                factor = 0;
-        }
-
-        const globalPrice = price;
-        const universalPrice = price + this.getPercentage(survey.price, factor);
+        const globalPrice = car.price;
+        const universalPrice = car.price + this.getPercentage(survey.price, car.factor);
 
         this.setState({
             offer: {
