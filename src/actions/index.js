@@ -7,8 +7,22 @@ import {
 
 const data = {};
 
-export const getSurveyAnswers = () => ({ type: GET_SURVEY_ANSWERS, data });
-export const addSurveyAnswers = (formValues) => ({ type: ADD_SURVEY_ANSWERS, survey: formValues });
+export const getSurveyAnswers = () => ({
+    type: GET_SURVEY_ANSWERS,
+    data
+});
 
-export const isAuthenticated = () => ({ type: IS_AUTHENTICATED, data });
-export const setAuthentication = (auth) => ({ type: SET_AUTHENTICATION, authenticated: auth });
+export const addSurveyAnswers = (formValues) => ({
+    type: ADD_SURVEY_ANSWERS,
+    survey: formValues
+});
+
+export const isAuthenticated = () => ({
+    type: IS_AUTHENTICATED,
+    data
+});
+
+export const setAuthentication = (auth) => ({
+    type: SET_AUTHENTICATION,
+    authenticated: auth
+});

@@ -5,6 +5,6 @@ import authReducer from './authReducer';
 const rootReducer = combineReducers({
     survey: surveyReducer,
     authenticated: authReducer
-})
+});
 
 export default rootReducer;
